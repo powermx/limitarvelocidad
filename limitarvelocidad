@@ -1,0 +1,39 @@
+#!/bin/bash
+# Limitador de Velocidad de VPS
+# Creador : PowerMX
+# Team : ☬Δҋכяѻ١כ ༒ Ӎӟӿյςө☬
+echo -e "\033[1;33m Se instalará el limitador de ancho de banda\033[0m"
+echo -e "\033[1;33m Si ya tenías una instalacion Previa, esta se eliminara\033[0m"
+echo -e "\033[1;33m Continuar?\033[0m"
+while [[ ${yesno} != @(s|S|y|Y|n|N) ]]; do
+read -p "[S/N]: " yesno
+tput cuu1 && tput dl1
+done
+if [[ ${yesno} = @(s|S|y|Y) ]]; then
+echo -e "Instalando, espere..."
+apt-get remove wondershaper -y 1> /dev/null 2> /dev/null
+apt-get install wondershaper -y 1> /dev/null 2> /dev/null
+echo -e "----------///----------"
+echo -e "Ahora escriba la cantidad en Kbps que quiere limitar"
+echo -e "Ejemplo: 1000"
+echo -e "Equivale a 1000 kbps"
+echo -e "No recomendamos usar menos de 512 kbps"
+echo -e "----------///----------"
+echo -e "Δ Escriba la velocidad de bajada (descarga)"
+read -p ": " speeddown
+echo -e "Δ Escriba la velocidad de subida (carga)"
+read -p ": " speedup
+wondershaper eth0 -d "$speeddown"  -u "speedup"
+echo -e "----------///----------"
+echo -e "∆ La velocidad de descarga ahora es de: $speedown kbps"
+echo -e "∆ La velocidad de subida ahora es de: $speedup kbps"
+echo -e "----------///----------"
+echo -e "Para resetear la velocidad de subida y bajada"
+echo -e "Teclee: resetvelocidad"
+rm /bin/resetvelocidad
+cat <<EOF > /bin/resetvelocidad
+wondershaper clear eth0
+EOF
+chmod +x /bin/resetvelocidad
+fi
+}
